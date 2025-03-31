@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niederschlag-Diagramm</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Niederschlag pro Monat</h1>
+<canvas id="rainChart"></canvas>
+
+<script>
+    async function fetchData() {
+        try {
+            const response = await fetch("http://localhost:8080/", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+
+            if (!response.ok) throw new Error(`HTTP Fehler! Status: ${response.status}`);
+
+            const data = await response.json();
+            console.log("Geladene Daten:", data); // Debugging
+
+            const labels = data.map(item => {
+                const year = Math.floor(item.REF_DATE / 100);
+                const month = item.REF_DATE % 100;
+                const monthNames = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+                return `${monthNames[month - 1]} ${year}`;
+            });
+
+            const values = data.map(item => parseFloat(item.P));
+
+            const ctx = document.getElementById('rainChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Niederschlag (P)',
+                        data: values,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: "Datum (YYYYMM)" } },
+                        y: { title: { display: true, text: "Niederschlag (mm)" } }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error("Fehler:", error);
+        }
+    }
+
+    fetchData();
+</script>
+</body>
+</html>
