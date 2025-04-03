@@ -19,6 +19,9 @@ public class InitData {
     @PostConstruct
     public void createDataFromFile(){
         try {
+            DataFetcher dataFetcher = new DataFetcher();
+
+
             InputStream inputStream = this.getClass().getResourceAsStream("/daten.json");
             ObjectMapper objectMapper = new ObjectMapper();
             List<Modle> data = objectMapper.readerForListOf(Modle.class).readValue(inputStream);
