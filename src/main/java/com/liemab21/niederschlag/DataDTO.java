@@ -21,6 +21,15 @@ public class DataDTO {
         this.p = p;
     }
 
+    public DataDTO(Modle modle) {
+        this.id = modle.getId();
+        this.nuts1 = modle.getNuts1();
+        this.districtCode = modle.getDistrictCode();
+        this.refYear = modle.getRefYear();
+        this.refDate = modle.getRefDate();
+        this.p = modle.getP();
+    }
+
     public Long getId() {
         return id;
     }

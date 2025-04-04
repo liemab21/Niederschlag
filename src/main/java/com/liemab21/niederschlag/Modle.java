@@ -39,4 +39,36 @@ public class Modle {
 
     @JsonProperty("P_MIN")
     private String p_min;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNuts1() {
+        return nuts1;
+    }
+
+    public int getDistrictCode() {
+        return districtCode;
+    }
+
+    public int getRefYear() {
+        return refYear;
+    }
+
+    public int getRefDate() {
+        return refDate;
+    }
+
+    public String getP() {
+        return p;
+    }
+
+    public String getP_max() {
+        return p_max;
+    }
+
+    public String getP_min() {
+        return p_min;
+    }
 }
